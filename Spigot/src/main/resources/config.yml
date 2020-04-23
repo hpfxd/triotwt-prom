@@ -1,0 +1,155 @@
+# ----------------------------------------------------------------------
+# Prom
+# by hpfxd.nl
+# <3 vv
+# ----------------------------------------------------------------------
+# Utilized by this project
+#
+# Paper by PaperMC Developers - github.com/PaperMC/Paper
+# Annotation Command Framework by Aikar - github.com/aikar/commands
+# Core by hpfxd - github.com/hpfxd
+# Localization Manager by hpfxd - github.com/hpfxd
+# Cooldown Manager by hpfxd - github.com/hpfxd
+# NoteBlockAPI by koca2000 - github.com/koca2000/NoteBlockAPI
+# ----------------------------------------------------------------------
+# Permissions
+#
+# acf.seevanish - give this to everyone to be able to use commands on players they can't see
+# /broadcast - prom.command.broadcast
+# /prom - prom.command.prom
+# force all players to see you even when player visibility is off - prom.alwaysvisible
+# bypass [party] chat cooldown - prom.bypasschatcooldown
+# prom.command.vote.stop
+# prom.command.vote.start
+# debug messages - prom.debug (hpf will die without this)
+# bypass player limit - prom.playerlimitbypass
+# leader access to all parties - prom.partyadmin
+# ----------------------------------------------------------------------
+
+cooldowns: # all cooldowns are in seconds
+  chat: 3
+  visibility: 1
+  kiss: 10
+  rose: 60
+  rose top: 30
+  party create: 30
+  party invite: 1
+  party teleport: 60
+  party chat: 1
+  party join: 30
+voteTop: 3 # show top x at the end of votes
+parties:
+  offlineTime: 5 # minutes
+  maxSize: 25
+  maxTeleportSize: 16
+waldoHeads:
+  - "world|64|64|64"
+  - "world|0|23|0"
+localization: # {br} = horizontal line break (only works for centered messages)
+  serverFull: "&f&lThe server is full!\n\n&7Discord: &9discord.gg/QxV2jtG"
+  cooldown: "&c&m{br}\n&f&lCooldown!\n\n&7You are on &e{cooldown} &7cooldown for &e{seconds} &7seconds.\n&c&m{br}"
+  couples:
+    create: "&7&m{br}\n&c<3 &aYou are now a couple with &e{player}&a! &c<3\n&7&m{br}"
+    breakupExecutor: "&7&m{br}\n&c</3 &cYou and your partner have broken up! &c</3\n&7&m{br}"
+  tab:
+    header: "&7this is a placeholder that pdl should change!\n&7i have no idea what i'm typing tbh, but hi"
+    footer: "&dand this is the footer!\n&7follow &b@hpfkys &7on twitter!!!"
+  debug: "&c[DEBUG] &f{str}"
+  music:
+    nowPlaying: "&7Now playing: &6&l{title}&7!" # supported replacements: {title}, {author}
+  heads:
+    alreadyFound: "&7&m{br}\n&f&lWaldo Heads\n\n&cYou have already found this head!\n&7&m{br}"
+    found: "&7&m{br}\n&f&lWaldo Heads\n\n&aYou found a head!\n&7You now have &e{heads} &7heads!\n&7&m{br}"
+  commands:
+    help:
+      base: "&7&m{br}\n&f&lHelp\n\n{n}&e/couple help &7Couple commands\n{n}&e/party help &7Party commands\n{n}&e/rose <player> &7Give a player a rose.\n{n}&e/vis &7Toggle player visibility\n{n}&e/spawn &7Teleport to spawn.\n&7&m{br}"
+    waldoHead:
+      displayFoundNone: "&7&m{br}\n&f&lWaldo Heads\n\n&cYou've found no heads!\n&7&m{br}"
+      displayFound: "&7&m{br}\n&f&lWaldo Heads\n\n&aYou've found &e{heads} &aheads!\n&7&m{br}"
+    couple:
+      voteError: "&c&m{br}\n&7You cannot do this while a vote is active.\n&c&m{br}"
+      view:
+        partner: "&7&m{br}\n&aYour current partner is &e{player}&a.\n&7&m{br}"
+        noPartner: "&7&m{br}\n&7You currently have no partner.\nSend a request to someone using &e/couple <player>&7!\n&7&m{br}"
+      propose:
+        alreadyHasPartnerSelf: "&7&m{br}\n&cYou already have a partner! No cheating!\n&7&m{br}"
+        alreadyHasPartnerOther: "&7&m{br}\n&e{player} &7already has a partner! &c</3\n&7&m{br}"
+        sentSelf: "&7&m{br}\n&aYou sent a partner request to &7{player}&a!\n&7&m{br}"
+        sentOther: "&7&m{br}\n&aYou received a partner request from &7{player}&a!\n&aUse &7/couple {player} &ato accept!\n&7&m{br}"
+        alreadySent: "&7&m{br}\n&cYou've already sent a partner request to this player.\n&cThey can accept using &7/couple {player}&7!\n&7&m{br}"
+      breakup:
+        noPartner: "&7&m{br}\n&cYou can't break up with yourself!\n&7&m{br}"
+      kiss:
+        noPartner: "&7&m{br}\n&cYou have no partner to kiss! :(\n&7&m{br}"
+        offline: "&7&m{br}\n&cYour partner is currently offline! :(\n&7&m{br}"
+        self: "&7&m{br}\n&c<3 &aYou kissed your partner! &c<3\n&7They can kiss you back with &a/couple kiss\n&7&m{br}"
+        other: "&7&m{br}\n&c<3 &aYour partner kissed you! &c<3\n&7Kiss them back with &a/couple kiss&7!\n&7&m{br}"
+    party:
+      notInParty: "&9&m{br}\n&f&lParty\n\n&cYou must be in a party to use this.\n&9&m{br}"
+      notLeader: "&9&m{br}\n&f&lParty\n\n&cYou must be the leader of your party to use this.\n&9&m{br}"
+      kick: "&9&m{br}\n&f&lParty\n\n&e{player} &chas been removed from the party.\n&9&m{br}"
+      full: "&9&m{br}\n&f&lParty\n\n&cThis party is full!\n&9&m{br}"
+      join:
+        success: "&9&m{br}\n&f&lParty\n\n&e{player} &ahas joined the party!\n&9&m{br}"
+        noParty: "&9&m{br}\n&f&lParty\n\n&cThat player is not in a party.\n&9&m{br}"
+        notInvited: "&9&m{br}\n&f&lParty\n\n&cYou have not been invited to this party!\n&9&m{br}"
+      create:
+        success: "&9&m{br}\n&f&lParty\n\n&aYour party has been created!\n&aPlayers can join with &e/party join {player}&a!\n&9&m{br}"
+        inParty: "&9&m{br}\n&f&lParty\n\n&cYou are already in a party!\n&9&m{br}"
+      invite:
+        invited: "&9&m{br}\n&f&lParty\n\n&aYou've been invited to a party!\n&aJoin using &e/party join {player}&a!\n&9&m{br}"
+        success: "&9&m{br}\n&f&lParty\n\n&e{player} &ahas been invited to the party.\n&9&m{br}"
+        inParty: "&9&m{br}\n&f&lParty\n\n&e{player} &cis already in a party!\n&9&m{br}"
+        expired: "&9&m{br}\n&f&lParty\n\n&7The party invite to &e{player} &7expired.\n&9&m{br}"
+      disband: "&9&m{br}\n&f&lParty\n\n&cThe party has been disbanded.\n&9&m{br}"
+      teleport:
+        success: "&9&m{br}\n&f&lParty\n\n&aThe leader teleported &e{players} &aplayers.\n&9&m{br}"
+        tooBig: "&9&m{br}\n&f&lParty\n\n&cThe party is too big to teleport.\n&9&m{br}"
+      chat:
+        format: "&9Party > &e{player}&7: {msg}"
+        muted: "&9&m{br}\n&f&lParty\n\n&cThe party chat is muted.\n&9&m{br}"
+      mute:
+        mute: "&9&m{br}\n&f&lParty\n\n&cParty chat is now disabled.\n&9&m{br}"
+        unmute: "&9&m{br}\n&f&lParty\n\n&aParty chat is now enabled.\n&9&m{br}"
+      promote:
+        success: "&9&m{br}\n&f&lParty\n\n&e{player} &ahas been promoted to leader.\n&9&m{br}"
+    prom:
+      reload:
+        default: "&7&m{br}\n&aSuccessfully reloaded the configuration.\n&7&m{br}"
+        couples: "&7&m{br}\n&aSuccessfully loaded {couples} couples!\n&7&m{br}"
+    broadcast:
+      format: "&9&m{br}\n&f&lAnnouncement\n\n&7{message}\n&9&m{br}"
+      title:
+        fadeIn: 20
+        stay: 150
+        fadeOut: 20
+    vis:
+      showAll: "&7&m{br}\n&aSuccessfully enabled player visibility.\n&7&m{br}"
+      hideAll: "&7&m{br}\n&cSuccessfully disabled player visibility.\n&7&m{br}"
+      showPlayer: "&7&m{br}\n&aYou can now see &e{player}&a.\n&7&m{br}"
+      hidePlayer: "&7&m{br}\n&cYou can no longer see &7{player}&c.\n&7&m{br}"
+      cannotHide: "&7&m{br}\n&cYou do not have permission to hide that player.\n&7&m{br}"
+    vote:
+      startSingle: "&a&m{br}\n&f&lVoting\n\n&7Voting has been enabled!\n&7Vote with &e/vote <player>&7!&a&m{br}"
+      startCouple: "&a&m{br}\n&f&lVoting\n\n&7Voting has been enabled!\n&7Vote with &e/vote <player>&7!&a&m{br}"
+      stop: "&a&m{br}\n&f&lVoting\n\n&e&l{player} &7has stopped the voting!\n&7View the results below!\n&a&m{br}"
+      resultsSingle: "&7{place}. &e{player}&7: &f{votes} &7votes."
+      resultsCouple: "&7{place}. &e{player1} &7+ &e{player2}&7: &f{votes} &7votes."
+      yourPlace: "&7You had &f{votes} &7votes!"
+      yourPlaceNoVotes: "&7You had no votes! &c</3"
+      votedSingle: "&7&m{br}\n&f&lVoting\n\n&fSuccessfully voted for &e{player}&f!\n&7&m{br}"
+      votedCouple: "&7&m{br}\n&f&lVoting\n\n&fSuccessfully voted for &e{player1} &7+ &e{player2}&f!\n&7&m{br}"
+      noCouple: "&c&m{br}\n&f&lVoting\n\n&7That player does not have a partner.\n&c&m{br}"
+      noVote: "&c&m{br}\n&f&lVoting\n\n&7There is currently no vote!\n&c&m{br}"
+      cannotVoteForSelf: "&c&m{br}\n&f&lVoting\n\n&7You cannot vote for yourself.\n&c&m{br}"
+      stopNoVote: "&c&m{br}\n&f&lVoting\n\n&7There is no vote to stop.\n&c&m{br}"
+    rose:
+      give: "&7&m{br}\n&c<3 &aYou gave &e{player} &aa rose! &c<3\n&7&m{br}"
+      givePartner: "&7&m{br}\n&c<3 &aYou gave your partner a rose! &c<3\n&7&m{br}"
+      given: "&7&m{br}\n&c<3 &aA player gave you a rose! &c<3\n&7&m{br}"
+      givenPartner: "&7&m{br}\n&c<3 &aYour partner gave you a rose! &c<3\n&7&m{br}"
+      cannotGiveSelf: "&c&m{br}\n&cYou cannot give yourself a rose!\n&c&m{br}"
+      name: "&cRose"
+      top:
+        header: "&7&m{br}\n&7Most roses received.\n&7&m{br}"
+        result: "&7#{place}. &e{player}&7: &f{roses} &7roses."

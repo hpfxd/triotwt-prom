@@ -1,0 +1,7 @@
+name: Prom
+version: ${project.version}
+main: nl.hpfxd.prom.Prom
+depend: [Core, ProtocolLib, NoteBlockAPI]
+authors: [hpfxd]
+description: plugin for triotwt prom <3
+website: https://hpfxd.nl/

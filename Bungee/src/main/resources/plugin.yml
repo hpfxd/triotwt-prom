@@ -1,0 +1,5 @@
+name: PromBungee
+version: ${project.version}
+main: nl.hpfxd.prom.bungee.PromBungee
+description: Prom plugin by hpfxd.nl
+author: "hpfxd.nl"
